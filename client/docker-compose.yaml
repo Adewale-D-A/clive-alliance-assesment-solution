@@ -1,0 +1,9 @@
+version: "3.8"
+
+services:
+  app:
+    container_name: client-bank-app
+    image: client-bank-app #fs-webapp-prod:v1.1.0.2
+    build:
+      context: .
+      target: production

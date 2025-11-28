@@ -1,0 +1,13 @@
+node_modules
+build
+.next
+
+/node_modules
+
+# next.js
+
+/.next/
+
+# production
+
+/build

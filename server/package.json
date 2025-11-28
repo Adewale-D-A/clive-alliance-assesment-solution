@@ -1,0 +1,47 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Banking Dashboard Backend",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "nodemon --watch ./ --exec tsx src/index.ts",
+    "migration:create": "npx prisma migrate dev --create-only",
+    "migrate": "npx prisma migrate dev",
+    "migrate:prod": "npx prisma migrate deploy",
+    "studio": "npx prisma studio --config ./prisma.config.ts",
+    "generate": "npx prisma generate",
+    "build": "rimraf dist && npx tsc",
+    "start": "node dist/src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@prisma/adapter-pg": "^7.0.1",
+    "@prisma/client": "^6.19.0",
+    "@types/express": "^5.0.5",
+    "@types/sqlite3": "^3.1.11",
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "express-validator": "^7.3.1",
+    "jsonwebtoken": "^9.0.2",
+    "nodemon": "^3.1.11",
+    "pg": "^8.16.3",
+    "sqlite3": "^5.1.7",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.20.6",
+    "typescript": "^5.7.3"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^24.10.1",
+    "@types/pg": "^8.15.6",
+    "prisma": "^6.19.0",
+    "rimraf": "^6.1.2",
+    "ts-node-dev": "^2.0.0"
+  }
+}

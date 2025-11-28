@@ -1,0 +1,10 @@
+version: "3.8"
+
+services:
+  app:
+    container_name: app-server
+    image: app-server:v1.0.0
+    restart: on-failure #always Or 'unless-stopped'
+    build:
+      context: .
+      # target: production

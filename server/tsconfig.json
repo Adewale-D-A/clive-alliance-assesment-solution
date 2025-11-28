@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+        "module": "nodenext",
+        "moduleResolution": "nodenext",
+    "target": "ES2023",
+    "strict": true,
+    "esModuleInterop": true,
+    "outDir": "./dist",
+    "resolveJsonModule": true, // Allows importing JSON files
+    // "ignoreDeprecations": "6.0",
+    // "allowImportingTsExtensions": true,
+    // "noEmit": true, // or "emitDeclarationOnly": true
+  },
+  "include": ["src/**/*.ts"],
+"exclude": ["node_modules"]
+
+}
