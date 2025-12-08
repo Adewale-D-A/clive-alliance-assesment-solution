@@ -1,5 +1,7 @@
 ##### 08.12.2025
 
+> Fix: Build error fix
+
 > Feature: Authentication endpoint integration (sign-up and login)
 > Feature: SIgnup schema, UI development
 > Feature: Dashboard metrics and recent transaction addition (endpoint inclusive)

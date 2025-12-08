@@ -109,7 +109,7 @@ This is a client app in ReactJS (Vite Frameword), TailwindCSS, basic undnerstand
 
 - run `npm install` (to install all the dependencies)
 - run `npm run build` (builds application i.e. transpiles TS file to JS)
-- run `npm run start` (start application on default port:5173)
+- run `npm run preview` (start application on default port:5173)
 - run `npm run dev` (runs a development app)
 
 [PRODUCT REQUIREMENTS DOCUMENT](https://docs.google.com/document/d/1pnuXaGh_KvQyFXnu6TIxn8y0DNguvZ3EDa6MXhnPt7Q/edit?pli=1&tab=t.0#heading=h.qovhhe2036cd)

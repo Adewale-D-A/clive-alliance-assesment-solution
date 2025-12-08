@@ -28,6 +28,7 @@ export default function useValidateAccount(accountNumber: string) {
         },
         account_number: 9876543210,
         account_name: "Azeez Olawale",
+        bank: { code: "1001", name: "Bank A" },
       });
     } catch (error) {
       setIsFailed(true);
