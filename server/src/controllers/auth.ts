@@ -44,7 +44,7 @@ export async function signInController(req: Request, res: Response) {
         .json(responseGenerator(false, "Invalid credentials"));
     }
     const authCredentials = {
-      token: generateToken({ id: authUser.id }),
+      token: await generateToken({ id: authUser.id }),
       user: authUser,
     };
     return res

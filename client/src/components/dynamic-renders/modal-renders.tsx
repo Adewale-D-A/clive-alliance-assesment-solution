@@ -5,7 +5,8 @@ import { cn } from "../../utils/cn";
 import { useAppDispatch, useAppSelector } from "../../stores/store-hooks";
 import { Dialog, DialogContent, DialogTitle } from "../_shared/dialog";
 import { closeFormModal } from "../../stores/features/services/form-modal";
-import AddEditUser from "./contents/add-edit-user";
+import Transact from "./contents/transact";
+import ShowTransaction from "./contents/show-transaction";
 
 const FormModal = () => {
   const dispatch = useAppDispatch();
@@ -39,7 +40,8 @@ export default FormModal;
 const renderOptions = () => {
   return {
     Null: <></>,
-    AddEditUser: <AddEditUser />,
+    Transact: <Transact />,
+    ShowTransaction: <ShowTransaction />,
   };
 };
 

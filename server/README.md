@@ -1,8 +1,10 @@
 # CLIVE ASSESSMENT APP SERVER
 
-### <b>prerequisite</b>:
+### <b>Prerequisite</b>:
 
-> This is a NODE server, PRISMA ORM using POSTGRESQL adapter.
+> This is a NODE server (ExpressJS framework), PRISMA ORM using POSTGRESQL adapter. Basic understanding of these stacks would be required to collaborate on this project.
+
+#### <b>APP Pakcages</b>:
 
  <table>
     <tr>
@@ -11,7 +13,7 @@
     </tr>
     <tr>
       <td>prisma</td>
-      <td>ORM (Orbject Relational Mapping) [DOC](https://www.prisma.io/docs/getting-started/prisma-orm/quickstart/postgresql)</td>
+      <td>ORM (Orbject Relational Mapping) <a href="https://www.prisma.io/docs/getting-started/prisma-orm/quickstart/postgresql">DOC</a></td>
     </tr>
     <tr>
       <td>dotenv</td>
@@ -46,7 +48,8 @@
       <td>It’s essentially a cross‑platform version of rm -rf, Used to remove dist folder before transpiling into ts</td>
     </tr>  
   </table>
-> Docker commands and usage
+
+#### <b>Running APP on Docker</b>:
 
  <table>
     <tr>
@@ -79,13 +82,38 @@
     </tr>
     </table>
 
-### Folder hierarchy
+#### <b>.ENV Setup</b>:
+
+ <table>
+    <tr>
+      <th>VARIABLE</th>
+      <th>DESCRIPTION</th>
+    </tr>
+    <tr>
+      <td>DATABASE_URL</td>
+      <td>DATABASE URL</td>
+    </tr>
+    <tr>
+      <td>PORT</td>
+      <td>App PORT</td>
+    </tr>
+    <tr>
+      <td>LOCALHOST</td>
+      <td>Client URL (CORS protection)</td>
+    </tr>
+    <tr>
+      <td>JWT_SECRET_KEY</td>
+      <td>JWT secret key</td>
+    </tr>
+    </table>
+
+#### <b>Folder hierarchy</b>
 
 - routers - interface between client and API (defines all the routes methods)
 - controllers - interface between router and service (defines the block responsible for what action)
 - services - interfaces between the controller and the model (defines DB calls)
 
----
+#### <b>Getting the APP running</b>
 
 - run `npm install` (to install all the dependencies)
 - run `npm run build` (builds application i.e. transpiles TS file to JS)

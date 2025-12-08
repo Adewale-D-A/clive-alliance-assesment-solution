@@ -43,8 +43,8 @@ const DashboardLayoutWrapper = ({
           <div className=" flex items-center gap-2">
             <ToggleNavMenuButton hideDesktopView />
             <div className="flex-col gap-0 hidden lg:flex">
-              <h3 className="text-xl lg:text-3xl font-semibold flex items-end gap-1.5">
-                Dashboard Overview
+              <h3 className="text-xl lg:text-2xl font-semibold flex items-end gap-1.5">
+                Your Personal Banking Experience
               </h3>
               <p className=" text-sm text-gray-400">
                 {formatDate(new Date().toISOString())},{" "}

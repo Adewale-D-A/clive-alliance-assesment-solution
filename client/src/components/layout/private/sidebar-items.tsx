@@ -1,4 +1,10 @@
-import { LayoutDashboard, UserRoundCog, Users } from "lucide-react";
+import {
+  LayoutDashboard,
+  PiggyBank,
+  UserRoundCog,
+  Users,
+  Wallet,
+} from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import NavLinkItem from "./nav-item";
 import { useAppSelector } from "../../../stores/store-hooks";
@@ -36,8 +42,8 @@ export default function SideBarItems() {
           title: "My Account",
           href: `/dashboard/account`,
           startUrl: "/dashboard/account",
-          icon: UserRoundCog,
-          iconHueClassName: "text-[#8ecae6] bg-[#8ecae6]/10",
+          icon: PiggyBank,
+          iconHueClassName: "text-[#66C61C] bg-[#66C61C]/10",
           children: [],
         },
         {
@@ -46,8 +52,8 @@ export default function SideBarItems() {
           title: "Transactions",
           href: `/dashboard/transactions`,
           startUrl: "/dashboard/transactions",
-          icon: UserRoundCog,
-          iconHueClassName: "text-[#8ecae6] bg-[#8ecae6]/10",
+          icon: Wallet,
+          iconHueClassName: "text-[#f4a261] bg-[#f4a261]/10",
           children: [],
         },
       ]

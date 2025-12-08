@@ -10,12 +10,14 @@ import { responseGenerator } from "../utils/auth.js";
 
 // Create a single transactions
 export async function createTransactionController(req: Request, res: Response) {
-  const { amount, type, description } = req.body;
+  const { amount, type, description, recipient_account, transaction_type } =
+    req.body;
   try {
-    const newTransaction = createTransactionService({
-      amount,
-      type,
+    const newTransaction = await createTransactionService({
+      amount: Number(amount),
       description,
+      recipient_account: Number(recipient_account),
+      transaction_type,
     });
     return res
       .status(201)
@@ -40,14 +42,14 @@ export async function retrieveTransactionController(
 ) {
   const { id } = req.params;
   try {
-    const Transaction = await retrieveTransactionService(id);
+    const transaction = await retrieveTransactionService(id);
     return res
       .status(200)
       .json(
         responseGenerator(
           true,
           "Transaction successfully retrieved",
-          Transaction
+          transaction
         )
       );
   } catch (error) {
@@ -117,16 +119,13 @@ export async function retriveTransactionsController(
   res: Response
 ) {
   try {
-    const Transactions = await retrieveTransactionsService();
-    return res
-      .status(201)
-      .json(
-        responseGenerator(
-          true,
-          "Transactions successfully retrieved",
-          Transactions
-        )
-      );
+    const transactions = await retrieveTransactionsService();
+    return res.status(201).json(
+      responseGenerator(true, "Transactions successfully retrieved", {
+        results: transactions,
+        count: 4,
+      })
+    );
   } catch (error) {
     return res
       .status(500)

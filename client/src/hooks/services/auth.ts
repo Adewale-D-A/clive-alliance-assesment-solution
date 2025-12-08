@@ -93,68 +93,31 @@ export default function useAuthentication() {
 
   const handleSignUpSubmit = async (data: SignUpSchemaType) => {
     try {
-      // STEP 1: LOGIN USER WITH AUTH CREDENTIALS
-      const auth = await customAxios.post("/users/sign-up", data);
+      // STEP 1: CREATE NEW USER
+      await customAxios.post("/auth/sign-up", data);
+      dispatch(
+        openInfobar({
+          render: "SuccessPrompt",
+          message: "Account successfully created",
+        })
+      );
       router("/auth/sign-in");
     } catch (error) {}
   };
 
   const handleSignInSubmit = async (data: SignInType) => {
     try {
-      // const { email, password } = data;
+      const { email, password } = data;
       // STEP 1: LOGIN USER WITH AUTH CREDENTIALS
-      // const auth = await customAxios.post("/auth/sign-in", {
-      //   email,
-      //   password,
-      // });
-      // const { access, refresh, user, permissions } = auth.data;
-      //   STEP 2: FETCH USER's DETAILS
-      // const authUser = await axios.get(`${BASE_URL}/users/me/`, {
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //     Authorization: `Bearer ${access}`,
-      //   },
-      // });
-      // const user = authUser?.data;
-      // const accessCredentials = {
-      //   access_token: access,
-      //   refresh,
-      // };
-
-      // const {
-      //   id,
-      //   username,
-      //   first_name,
-      //   last_name,
-      //   email: authEmail,
-      //   phone_number,
-      //   dob,
-      //   gender,
-      //   user_type,
-      // } = user;
-
-      // const profile = {
-      //   id,
-      //   user_type,
-      //   username,
-      //   first_name,
-      //   last_name,
-      //   email: authEmail,
-      //   phone_number,
-      //   dob,
-      //   gender,
-      // };
-      // STEP 3: PERSIST TOKEN AND PROFILE ON SERVER SIDE COOKIE
-      // ALERT: Internal API call!
-      // await axios.post(`/api/auth/store-cookie`, {
-      //   token: accessCredentials,
-      //   profile,
-      //   permissions: [], //myPermissions,
-      // });
+      const auth = await customAxios.post("/auth/sign-in", {
+        email,
+        password,
+      });
+      const { token, user } = auth.data?.data;
 
       // STEP 4: PERSIST TOKEN AND PROFILE ON CLIENT SIDE LOCAL STORAGE
-      // storeTokenClient({ token: access, refresh });
-      // storeProfileClient({ profile });
+      storeTokenClient({ token, refresh: "" });
+      storeProfileClient({ profile: user });
 
       // STEP 5: REDIRECT USER SAFELY BASED ON ROLE
       router("/dashboard/home");

@@ -1,19 +1,19 @@
 import { useCallback, useEffect, useState } from "react";
-import type { UserT } from "../../../../types/api/service.types";
+import type { TransactionT } from "../../../../types/api/service.types";
 import useAxios from "../../../../config/services/axios-context";
 
-export default function useGetAUser(id?: string) {
+export default function useGetATransaction(id?: string) {
   const axios = useAxios();
-  const [data, setData] = useState<UserT | null>(null);
+  const [data, setData] = useState<TransactionT | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isFailed, setIsFailed] = useState(false);
 
-  const getUser = useCallback(async () => {
+  const getTransaction = useCallback(async () => {
     setIsLoading(true);
     setIsFailed(false);
     try {
-      const response = await axios.get(`/users/all-users/${id}/`);
-      const data = response?.data;
+      const response = await axios.get(`/transactions/${id}`);
+      const data = response?.data?.data;
       setData(data);
     } catch (error) {
       setIsFailed(true);
@@ -25,7 +25,7 @@ export default function useGetAUser(id?: string) {
 
   useEffect(() => {
     if (id) {
-      getUser();
+      getTransaction();
     }
   }, [id]);
 
@@ -34,6 +34,6 @@ export default function useGetAUser(id?: string) {
     isLoading,
     isFailed,
     setIsFailed,
-    retryFunction: getUser,
+    retryFunction: getTransaction,
   };
 }

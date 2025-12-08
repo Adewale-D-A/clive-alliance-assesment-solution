@@ -14,14 +14,14 @@ import requireAuth from "../middleware/require-auth.js";
 
 const router = express.Router();
 
-// Single user
+// Single transaction
 router
   .route("/:id")
   .get(requireAuth, retrieveTransactionController)
   .patch(requireAuth, validateUpdateTransaction, updateTransactionController)
   .delete(requireAuth, deleteTransactionController);
 
-// All users
+// All Transaction
 router
   .route("")
   .post(requireAuth, validateCreateTransaction, createTransactionController)

@@ -12,7 +12,7 @@ export default function Refresh({
     <Button
       variant={"text"}
       title="Refresh"
-      className=" hover:text-green-500 hover:scale-110 transition-all hover:cursor-pointer"
+      className=" hover:text-green-500 hover:scale-110 transition-all hover:cursor-pointer w-fit"
       isLoading={isLoading}
       onClick={() => retry(true)}
     >

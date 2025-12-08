@@ -1,7 +1,7 @@
 import { Button } from "../../../components/_shared/button";
 import TableTemplate from "../../../components/_shared/table/table-template";
 import Search from "../../../components/search";
-import { Ellipsis } from "lucide-react";
+import { Ellipsis, Wallet } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,14 +12,68 @@ import DateFilter from "../../../components/filters/date";
 import DateSort from "../../../components/filters/date-sort";
 import formatDate from "../../../utils/dates/isoDateConverter";
 import pageSerializer from "../../../utils/page-serializer";
+import { useCallback } from "react";
+import { useAppDispatch } from "../../../stores/store-hooks";
+import { openFormModal } from "../../../stores/features/services/form-modal";
+import useGetTransactions from "../../../hooks/services/GET/transactions/transactions";
+import useExtractUrlParams from "../../../hooks/extract-url-query-params";
+import currencyFormat from "../../../utils/currency-formatter";
 
 export default function DashboardTransactions() {
+  const dispatch = useAppDispatch();
+
+  const [{ search, page, start_date, end_date, size, sort }] =
+    useExtractUrlParams({
+      page: 1,
+      size: 10,
+      start_date: "",
+      end_date: "",
+      search: "",
+      sort: "asc",
+    });
+  const { data, pagination, isLoading } = useGetTransactions({
+    search,
+    page,
+    limit: size,
+    start_date,
+    end_date,
+    sort,
+  });
+
+  const transact = useCallback(() => {
+    dispatch(
+      openFormModal({
+        render: "Transact",
+        title: "New Transaction",
+        metadata: {
+          w_classname: "max-w-screen-lg",
+        },
+      })
+    );
+  }, []);
+
+  const showTransaction = useCallback((id: string) => {
+    dispatch(
+      openFormModal({
+        render: "ShowTransaction",
+        title: "Transaction Details",
+        metadata: { id },
+      })
+    );
+  }, []);
+
   return (
     <div className=" w-full space-y-2">
       <div className=" w-full space-y-5">
-        <h1 className=" font-semibold text-2xl">My Transactions </h1>
-        <div className=" w-full flex justify-end items-end flex-col gap-5">
-          {<Button className=" w-fit">Make a transaction</Button>}
+        <div className=" w-full flex justify-center items-center">
+          <p className=" font-bold text-center rounded-xl bg-rose-500/5 text-rose-500 p-4 px-8 w-fit flex items-center gap-2">
+            <Wallet /> My Transactions
+          </p>
+        </div>
+        <div className=" w-full flex justify-center lg:justify-end items-end flex-col gap-5">
+          <Button className="w-full lg:w-fit" onClick={transact}>
+            Make a transaction
+          </Button>
           <div className=" w-full flex flex-col lg:flex-row justify-between gap-4 items-center shadow p-2">
             <DateFilter /> <DateSort />
             <div className="w-fit flex justify-end items-center gap-2">
@@ -28,8 +82,8 @@ export default function DashboardTransactions() {
           </div>
         </div>
         <TableTemplate
-          data={[]}
-          isLoading={false}
+          data={data}
+          isLoading={isLoading}
           columns={[
             {
               header: "S/N",
@@ -45,15 +99,13 @@ export default function DashboardTransactions() {
               ),
             },
             {
-              header: "NAME",
-              key: "name",
-              render: ({ first_name, last_name, email, phone_number }) => (
+              header: "RECIPIENT",
+              key: "recipient",
+              render: ({ recipient }) => (
                 <div>
-                  <p className=" capitalize">
-                    {first_name} {last_name}
-                  </p>
+                  <p className=" capitalize">{recipient?.account_name}</p>
                   <span className=" text-xs text-gray-500">
-                    {email} | {phone_number}
+                    Account: | {recipient?.account_number}
                   </span>
                 </div>
               ),
@@ -61,12 +113,17 @@ export default function DashboardTransactions() {
             {
               header: "AMOUNT",
               key: "amount",
-              render: ({ gender }) => <p>{gender}</p>,
+              render: ({ amount }) => <p>{currencyFormat(amount || 0)}</p>,
+            },
+            {
+              header: "TRANSACTION TYPE",
+              key: "type",
+              render: ({ type }) => <p className=" uppercase">{type}</p>,
             },
             {
               header: "DESCRIPTION",
               key: "description",
-              render: ({ user_type }) => <p>{user_type?.name}</p>,
+              render: ({ description }) => <p>{description}</p>,
             },
             {
               header: "CREATED AT",
@@ -89,14 +146,16 @@ export default function DashboardTransactions() {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
-                    {<DropdownMenuItem>View Details</DropdownMenuItem>}
+                    <DropdownMenuItem onSelect={() => showTransaction(row?.id)}>
+                      Details
+                    </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               ),
             },
           ]}
           showPaginator={true}
-          // pagination={pagination}
+          pagination={pagination}
         />
       </div>
     </div>

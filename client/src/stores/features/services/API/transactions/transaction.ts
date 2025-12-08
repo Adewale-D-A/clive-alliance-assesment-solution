@@ -1,4 +1,4 @@
-import type { UserT } from "../../../../../types/api/service.types";
+import type { TransactionT } from "../../../../../types/api/service.types";
 import type { PaginationType } from "../../../../../types/types";
 import {
   addToListReduxHelper,
@@ -8,25 +8,25 @@ import {
 } from "../../../../../utils/redux-store-helper";
 import { createSlice } from "@reduxjs/toolkit";
 
-export const usersStoreData = createSlice({
-  name: "users",
+export const transactionsStoreData = createSlice({
+  name: "transactions",
   initialState: {
     value: {
       status: false,
       paginated_results: [] as {
         pagination: PaginationType;
-        data: UserT[];
+        data: TransactionT[];
         key: string;
       }[],
-      data: [] as UserT[],
+      data: [] as TransactionT[],
     },
   },
   reducers: {
-    updateUsersList: (state, action) => {
+    updateTransactionsList: (state, action) => {
       state.value.status = true;
       state.value.data = action?.payload?.data;
     },
-    addUsersToList: (state, action) => {
+    addTransactionToList: (state, action) => {
       const { data, pagination } = addToListReduxHelper(
         state.value,
         action?.payload
@@ -43,7 +43,7 @@ export const usersStoreData = createSlice({
         state.value.paginated_results = paginated_results;
       }
     },
-    removeUsersInList: (state, action) => {
+    removeTransactionInList: (state, action) => {
       const { id } = action?.payload;
       const { data, paginated_result } = removeItemFromStoreReduxHelper(
         state.value,
@@ -52,7 +52,7 @@ export const usersStoreData = createSlice({
       state.value.data = data;
       state.value.paginated_results = paginated_result;
     },
-    replaceUsersInList: (state, action) => {
+    replaceTransactionInList: (state, action) => {
       const { data, paginated_result } = replaceItemInStoreReduxHelper(
         state.value,
         action?.payload
@@ -60,7 +60,7 @@ export const usersStoreData = createSlice({
       state.value.data = data;
       state.value.paginated_results = paginated_result;
     },
-    clearUsersList: (state) => {
+    clearTransactionsList: (state) => {
       state.value.status = false;
       state.value.data = [];
     },
@@ -68,12 +68,12 @@ export const usersStoreData = createSlice({
 });
 
 export const {
-  updateUsersList,
-  addUsersToList,
+  updateTransactionsList,
+  addTransactionToList,
   addToPaginationHistory,
-  removeUsersInList,
-  replaceUsersInList,
-  clearUsersList,
-} = usersStoreData.actions;
+  removeTransactionInList,
+  replaceTransactionInList,
+  clearTransactionsList,
+} = transactionsStoreData.actions;
 
-export default usersStoreData.reducer;
+export default transactionsStoreData.reducer;

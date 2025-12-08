@@ -8,3 +8,30 @@ export type UserT = {
   dob: string;
   gender: string;
 };
+
+export type UserAccount = {
+  user?: UserT;
+  account_number: number;
+  account_name: string;
+  bank: { code: string; name: string };
+};
+
+export type AuthUserAccount = {
+  user: UserT;
+  account_number: number;
+  account_name: string;
+  currency: string;
+  account_type: string;
+  available_balance: number;
+};
+
+export type TransactionT = {
+  id: string;
+  amount: number;
+  description: string;
+  recipient: UserAccount;
+  type: string;
+  created_at: string;
+  updated_at: number;
+  created_by: UserT;
+};

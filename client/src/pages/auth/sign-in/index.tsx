@@ -27,11 +27,13 @@ export default function SignInPage() {
       <Form {...signIn.form}>
         <form
           onSubmit={signIn.form.handleSubmit(signIn.submit)}
-          className="w-full max-w-md bg-white shadow-white shadow-lg p-8 rounded-lg space-y-4"
+          className="w-full max-w-md bg-white shadow-lg p-8 rounded-lg space-y-4"
         >
-          <div className="text-center mb-8 space-y-3">
+          <div className="text-center mb-8 space-y-3 flex flex-col items-center">
             <Logo />
-            <p className="text-gray-600">Sign in to your account</p>
+            <p className="text-gray-600">
+              Sign in, continue your banking experience
+            </p>
           </div>
           <FormField
             name="email"
@@ -43,8 +45,7 @@ export default function SignInPage() {
                   <Input
                     type="email"
                     placeholder="Enter your email"
-                    value={field.value}
-                    onChange={field.onChange}
+                    {...field}
                   />
                 </FormControl>
                 <FormMessage />
@@ -61,8 +62,7 @@ export default function SignInPage() {
                   <Input
                     type={"password"}
                     placeholder="Enter your password"
-                    value={field.value}
-                    onChange={field.onChange}
+                    {...field}
                   />
                 </FormControl>
                 <FormMessage />
@@ -80,10 +80,19 @@ export default function SignInPage() {
           <Button
             isLoading={signIn.form?.formState?.isSubmitting}
             type="submit"
-            className=" w-full mt-5"
+            className=" w-full mt-2"
           >
             Sign In
           </Button>
+          <p className=" text-center space-x-2">
+            New user?
+            <Link
+              to={"/auth/sign-up"}
+              className=" dark:text-primary text-black border-b border-dotted dark:border-primary border-black px-3"
+            >
+              Sign Up
+            </Link>
+          </p>
         </form>
       </Form>
     </div>

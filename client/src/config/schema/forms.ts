@@ -53,6 +53,7 @@ export const SignInSchema = z.object({
 export const SignUpSchema = z.object({
   email: z.string().min(2, { message: "Email is required" }),
   gender: z.string().min(2, { message: "Gender is required" }),
+  account_type: z.string().min(2, { message: "Account type is required" }),
   first_name: z.string().min(2, { message: "First ame is required" }),
   last_name: z.string().min(2, { message: "Last name is required" }),
   username: z.string().optional(),
@@ -106,4 +107,16 @@ export const AddEditUserSchema = z.object({
   password: z.string().min(2, { message: "Password is required" }),
   phone_number: z.string().min(2, { message: "Phone number is required" }),
   dob: z.string().min(2, { message: "Date of birth is required" }),
+});
+
+export const NewTransactionSchema = z.object({
+  transaction_type: z
+    .string()
+    .min(2, { message: "Please Select a transaction type" }),
+  amount: z.coerce.number<number>().min(1, { message: "Must be at least 1" }),
+  description: z.string().min(2, { message: "Description is required" }),
+  recipient_bank: z.string().min(2, { message: "Please Select recipient's" }),
+  recipient_account: z.coerce
+    .number<number>()
+    .min(10, { message: "Must be at least 10" }),
 });

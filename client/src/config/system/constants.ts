@@ -22,9 +22,4 @@ export const ACCEPTED_FILE_TYPES_INPUT = [
   },
 ];
 
-export enum INPUT_TEMPLATES_VALUES {
-  INPUT = "INPUT",
-  SELECT = "SELECT",
-  CHECKBOX = "CHECKBOX",
-  TEXTAREA = "TEXTAREA",
-}
+export const ACCOUNT_NUMBER_MAX_LENGTH = 10;

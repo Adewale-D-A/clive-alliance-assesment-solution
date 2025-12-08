@@ -9,7 +9,7 @@ import extractErrMssg from "../../utils/extract-error-msg";
 // import { updateToken } from "@/stores/features/auth/auth";
 // import signOut from "@/utils/auth/sign-out-client";
 
-const BASE_URL = "https://locahost:8080";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
   headers: {

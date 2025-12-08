@@ -27,6 +27,7 @@ import cors from "cors";
 import authRoutes from "./routers/auth.js";
 import usersRoutes from "./routers/users.js";
 import transactionsRoutes from "./routers/transactions.js";
+import accountsRoutes from "./routers/accounts.js";
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -47,6 +48,8 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/users", usersRoutes);
 app.use("/api/transactions", transactionsRoutes);
+app.use("/api/accounts", accountsRoutes);
+
 app.get("/", (req, res) => {
   res.send("My server is ready!!!");
 });

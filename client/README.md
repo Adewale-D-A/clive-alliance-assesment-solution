@@ -2,13 +2,11 @@
 
 =====================================
 
-### Project Overview
+### <b>Prerequisite</b>:
 
-This is a banking assessment app.
+This is a client app in ReactJS (Vite Frameword), TailwindCSS, basic undnerstanding of these stacks would be required to collaborate on this project.
 
-### Features
-
-> Packages used in this project
+#### <b>APP Pakcages</b>:
 
  <table>
     <tr>
@@ -57,7 +55,7 @@ This is a banking assessment app.
     </tr>
   </table>
 
-> Docker commands and usage
+#### <b>Running APP on Docker</b>:
 
  <table>
     <tr>
@@ -86,7 +84,7 @@ This is a banking assessment app.
     </tr>
     </table>
 
-> ENV file entries
+#### <b>.ENV Setup</b>:
 
  <table>
     <tr>
@@ -94,19 +92,24 @@ This is a banking assessment app.
       <th>DESCRIPTION</th>
     </tr>
     <tr>
-      <th>REACT_APP_API_BASE_URL</th>
-      <th>BASE API URL</th>
+      <td>VITE_API_BASE_URL</td>
+      <td>BASE API URL</td>
     </tr>
     <tr>
-      <td>REACT_APP_AUTH_SESION_KEY</td>
+      <td>VITE_AUTH_SESION_KEY</td>
       <td>Client auth session hash key</td>
     </tr>
     <tr>
-      <td>REACT_APP_AUTH_PROFILE_KEY</td>
+      <td>VITE_AUTH_PROFILE_KEY</td>
       <td>Client auth profile hash key</td>
     </tr>
-    <tr>
-      <td>MAPS_API_KEY</td>
-      <td>Googles maps API key</td>
-    </tr>
     </table>
+
+#### <b>Getting the APP running</b>
+
+- run `npm install` (to install all the dependencies)
+- run `npm run build` (builds application i.e. transpiles TS file to JS)
+- run `npm run start` (start application on default port:5173)
+- run `npm run dev` (runs a development app)
+
+[PRODUCT REQUIREMENTS DOCUMENT](https://docs.google.com/document/d/1pnuXaGh_KvQyFXnu6TIxn8y0DNguvZ3EDa6MXhnPt7Q/edit?pli=1&tab=t.0#heading=h.qovhhe2036cd)

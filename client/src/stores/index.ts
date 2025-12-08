@@ -8,7 +8,7 @@ import formModal from "./features/services/form-modal";
 import dynamicContentRendering from "./features/services/dynamic-content-render";
 
 // API
-import usersStoreData from "./features/services/API/users/users";
+import transactionsStoreData from "./features/services/API/transactions/transaction";
 
 const appReducer = combineReducers({
   //app functionality
@@ -17,7 +17,7 @@ const appReducer = combineReducers({
   formModal,
   dynamicContentRendering,
   // api -services
-  usersStoreData, //auth-user
+  transactionsStoreData,
   auth: authUser,
 });
 
