@@ -1,5 +1,6 @@
 ##### 09.12.2025
 
+> Fix: Count filtering bug fix
 > Update: Show recipient's only for transfer transaction types
 > Update: Insufficient balance validation addition
 > Fix: Transaction filtering logic bug fix

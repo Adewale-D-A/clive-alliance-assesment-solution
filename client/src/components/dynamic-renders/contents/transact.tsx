@@ -68,6 +68,10 @@ export default function Transact() {
         "recipient_account",
         Number(myAccount?.account_number)
       );
+    } else {
+      // Clear data on transaction type field change to allow new input
+      transaction.form.setValue("recipient_bank_code", "");
+      transaction.form.setValue("recipient_account", 0);
     }
     if (transaction_type === "DEPOSIT") {
       setInsufficientBal(false);

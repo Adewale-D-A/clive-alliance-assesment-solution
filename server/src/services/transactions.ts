@@ -48,27 +48,30 @@ export async function retrieveTransactionsService({
   const skip = (pagination.page - 1) * pagination.limit;
   const take = pagination.limit;
 
+  const filterOptions: any = search
+    ? {
+        user_id: userId,
+        description: { contains: search, mode: "insensitive" },
+        created_at: {
+          gte: filter?.start_date,
+          lte: filter?.end_date,
+        },
+      }
+    : {
+        user_id: userId,
+      };
   const transactions = await prisma.transactions.findMany({
     skip,
     take,
-    where: search
-      ? {
-          user_id: userId,
-          description: { contains: search, mode: "insensitive" },
-          created_at: {
-            gte: filter?.start_date,
-            lte: filter?.end_date,
-          },
-        }
-      : {
-          user_id: userId,
-        },
+    where: filterOptions,
     include: {
       userId: true,
     },
     orderBy: { created_at: sort ? "asc" : "desc" },
   });
-  const count = await prisma.transactions.count();
+  const count = await prisma.transactions.count({
+    where: filterOptions,
+  });
   return { data: transactions, count };
 }
 

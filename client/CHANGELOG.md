@@ -1,5 +1,6 @@
 ##### 09.12.2025
 
+> Fix: Recipient's bank details cache fix
 > Update: Show recipient's only for transfer transaction types
 > Update: Insufficient balance validation addition
 > Update: Account number input length validation
