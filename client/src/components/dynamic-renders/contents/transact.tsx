@@ -62,6 +62,16 @@ export default function Transact() {
   }, [metadata?.type]);
 
   useEffect(() => {
+    if (transaction_type === "DEPOSIT") {
+      setInsufficientBal(false);
+    } else {
+      setInsufficientBal(
+        Boolean(Number(amount) >= Number(myAccount?.available_balance))
+      );
+    }
+  }, [myAccount, amount, transaction_type]);
+
+  useEffect(() => {
     if (!(transaction_type === "TRANSFER")) {
       transaction.form.setValue("recipient_bank_code", "1001");
       transaction.form.setValue(
@@ -73,14 +83,7 @@ export default function Transact() {
       transaction.form.setValue("recipient_bank_code", "");
       transaction.form.setValue("recipient_account", 0);
     }
-    if (transaction_type === "DEPOSIT") {
-      setInsufficientBal(false);
-    } else {
-      setInsufficientBal(
-        Boolean(Number(amount) >= Number(myAccount?.available_balance))
-      );
-    }
-  }, [myAccount, amount, transaction_type]);
+  }, [transaction_type, myAccount]);
 
   return (
     <div className=" w-full space-y-5">
