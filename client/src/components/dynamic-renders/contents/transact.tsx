@@ -138,7 +138,9 @@ export default function Transact() {
                         <FormControl>
                           <Input
                             placeholder="Enter recipient's account number"
-                            type="number"
+                            type="text"
+                            max={10}
+                            maxLength={10}
                             {...field}
                           />
                         </FormControl>

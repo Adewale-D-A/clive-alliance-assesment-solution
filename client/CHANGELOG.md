@@ -1,5 +1,6 @@
 ##### 09.12.2025
 
+> Update: Account number input length validation
 > Fix: Ui inconsitencies bug fix
 > Update: Auto sign-out users on authentication token malformed
 > Feature: Home, Transactions and Account modules endpoints and UI fully fleshed out and tested

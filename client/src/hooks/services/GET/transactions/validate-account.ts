@@ -27,7 +27,7 @@ export default function useValidateAccount(
     } finally {
       setIsLoading(false);
     }
-  }, [accountNumber]);
+  }, [accountNumber, bankCode]);
 
   useEffect(() => {
     if (accountNumber.length === ACCOUNT_NUMBER_MAX_LENGTH && bankCode) {
@@ -35,7 +35,7 @@ export default function useValidateAccount(
     } else {
       setData(null);
     }
-  }, [accountNumber]);
+  }, [accountNumber, bankCode]);
 
   return {
     data,

@@ -91,7 +91,7 @@
     </tr>
     <tr>
       <td>DATABASE_URL</td>
-      <td>DATABASE URL</td>
+      <td>POSTGRES DATABASE URL</td>
     </tr>
     <tr>
       <td>PORT</td>
@@ -120,13 +120,16 @@
 #### <b>Getting the APP running</b>
 
 - run `npm install` (to install all the dependencies)
-- run `npm run build` (builds application i.e. transpiles TS file to JS)
-- run `npm run start` (start application on default port:8080)
 - run `npm run dev` (runs a hot-reload on-save environment with nodemon)
 - run `npm run migration:create` (create a prisma migration without reforming DB, useful in checking the generated migration SQL to ensure its query is what is intended to achieve)
 - run `npm run generate` (generate client type definition)
 - run `npm run migrate` (effect schema changes to connected DB, ideally, it should be the DEV DB)
+
+##### <b>Production ready commands</b>
+
 - run `npm run migrate:prod` (effect schema changes to connected DB, ideally, it should be the PROD DB)
+- run `npm run build` (builds application i.e. transpiles TS file to JS)
+- run `npm run start` (start application on default port:8080)
 - run `npm run seed` (Seed data into the connected DB)
 
 [PRISMA DOC](https://www.prisma.io/docs/getting-started/prisma-orm/quickstart/postgresql)
