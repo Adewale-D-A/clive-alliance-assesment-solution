@@ -29,8 +29,8 @@ export default function DateSort({ ...props }: SelectPrimitive.SelectProps) {
       >
         <SelectGroup className=" w-full">
           {[
-            { id: "1", label: "Asc", value: "created_at" },
-            { id: "2", label: "Desc", value: "-created_at" },
+            { id: "1", label: "Asc", value: "1" },
+            { id: "2", label: "Desc", value: "0" },
           ].map((state) => (
             <SelectItem value={state?.value} key={state?.value}>
               {state?.label}

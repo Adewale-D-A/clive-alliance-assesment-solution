@@ -102,6 +102,10 @@
       <td>Client URL (CORS protection)</td>
     </tr>
     <tr>
+      <td>PROD_URL</td>
+      <td>Client URL for production (CORS protection)</td>
+    </tr>
+    <tr>
       <td>JWT_SECRET_KEY</td>
       <td>JWT secret key</td>
     </tr>

@@ -7,11 +7,12 @@ import accountsRoutes from "./routers/accounts.js";
 const app = express();
 const PORT = process.env.PORT || 8080;
 const LOCALHOST = process.env.LOCALHOST || "http://localhost:5173";
+const PROD_URL = process.env.PROD_URL || "http://localhost:4173";
 
 // Basic middleware setup - Consider additional security middleware
 app.use(
   cors({
-    origin: ["*", LOCALHOST],
+    origin: ["*", LOCALHOST, PROD_URL],
     credentials: false,
   })
 );

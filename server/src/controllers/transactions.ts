@@ -155,7 +155,7 @@ export async function retriveTransactionsController(
   const endDate = new Date(end_date as string) as Date;
 
   const filter =
-    startDate && endDate
+    startDate && endDate && start_date && end_date
       ? { start_date: startDate, end_date: endDate }
       : undefined;
   try {

@@ -7,6 +7,6 @@ export default function signOutClient(redirect?: string) {
     localStorage.removeItem(authProfileKey);
     localStorage.removeItem(authKey);
     localStorage.removeItem(authPermissionKey);
-    // window.location.href = redirect ? `/?redirect=${redirect}` : "/";
+    window.location.href = redirect ? `/?redirect=${redirect}` : "/";
   }
 }

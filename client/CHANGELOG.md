@@ -1,5 +1,7 @@
 ##### 09.12.2025
 
+> Fix: Ui inconsitencies bug fix
+> Update: Auto sign-out users on authentication token malformed
 > Feature: Home, Transactions and Account modules endpoints and UI fully fleshed out and tested
 
 ##### 08.12.2025

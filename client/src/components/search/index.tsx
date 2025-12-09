@@ -28,7 +28,6 @@ export default function Search({
     (e: SyntheticEvent) => {
       e.preventDefault();
       urlQuery("search", search);
-      console.log("hot here");
     },
     [urlQuery, search, allowUrlQuery]
   );

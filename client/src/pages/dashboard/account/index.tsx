@@ -74,7 +74,8 @@ export default function DashboardAccounts() {
                 id: "3",
                 title: "Account",
                 description: `Account Type (${myAccount?.account_type})`,
-                value: "Acc No" + " " + String(myAccount?.account_number || ""),
+                value:
+                  "Acc No:" + " " + String(myAccount?.account_number || ""),
                 icon: <Hash className=" h-6 w-6" />,
                 textClassName: "text-[#B8860B]",
                 bgClassName: "bg-[#B8860B]/10",

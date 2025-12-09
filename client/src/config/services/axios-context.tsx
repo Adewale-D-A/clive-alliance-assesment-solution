@@ -5,9 +5,8 @@ import { openInfobar } from "../../stores/features/app-native-features/info-moda
 import { useAppDispatch } from "../../stores/store-hooks";
 import extractToken from "../../utils/auth/extract-token-client";
 import extractErrMssg from "../../utils/extract-error-msg";
-// import { usePathname } from "next/navigation";
-// import { updateToken } from "@/stores/features/auth/auth";
-// import signOut from "@/utils/auth/sign-out-client";
+import signOutClient from "../../utils/auth/sign-out-client";
+import { useLocation } from "react-router-dom";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 const axiosInstance = axios.create({
@@ -30,7 +29,7 @@ export default function useAxios(
     disableErrMssg: false,
   }
 ) {
-  // const pathname = usePathname();
+  const location = useLocation();
   const dispatch = useAppDispatch();
   const { token } = extractToken();
   useEffect(() => {
@@ -63,6 +62,9 @@ export default function useAxios(
       },
       async (error) => {
         const errMssg = extractErrMssg(error?.response);
+        if (error?.response?.status === 401) {
+          signOutClient(location?.pathname);
+        }
         if (!option?.disableErrMssg) {
           dispatch(
             openInfobar({

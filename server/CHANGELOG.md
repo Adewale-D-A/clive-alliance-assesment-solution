@@ -1,5 +1,6 @@
 ##### 09.12.2025
 
+> Fix: Transaction filtering logic bug fix
 > Feature: Home, Transactions and Account modules endpoints fully fleshed out and tested
 
 ##### 08.12.2025
