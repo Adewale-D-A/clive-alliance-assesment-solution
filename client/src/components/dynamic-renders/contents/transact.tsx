@@ -62,6 +62,13 @@ export default function Transact() {
   }, [metadata?.type]);
 
   useEffect(() => {
+    if (!(transaction_type === "TRANSFER")) {
+      transaction.form.setValue("recipient_bank_code", "1001");
+      transaction.form.setValue(
+        "recipient_account",
+        Number(myAccount?.account_number)
+      );
+    }
     if (transaction_type === "DEPOSIT") {
       setInsufficientBal(false);
     } else {
@@ -118,71 +125,79 @@ export default function Transact() {
                 </FormItem>
               )}
             />
-            <div className=" w-full grid grid-cols-1 gap-5 lg:grid-cols-2">
-              <FormField
-                control={transaction.form.control}
-                name="recipient_bank_code"
-                render={({ field }) => (
-                  <FormItem className="space-y-2">
-                    <FormLabel className="font-medium text-gray-600">
-                      Recipient Bank
-                    </FormLabel>
-                    <Select onValueChange={field.onChange} value={field.value}>
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select transaction type" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent className="max-h-[50vh]" position="popper">
-                        <SelectGroup>
-                          {[
-                            { code: "1001", name: "Bank A" },
-                            { code: "1002", name: "Bank B" },
-                            { code: "1003", name: "Bank C" },
-                          ].map((state) => (
-                            <SelectItem value={state.code} key={state.code}>
-                              {state.name}
-                            </SelectItem>
-                          ))}
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <div className=" w-full">
-                <div className="flex w-full items-center gap-2">
-                  <FormField
-                    control={transaction.form.control}
-                    name="recipient_account"
-                    render={({ field }) => (
-                      <FormItem className="space-y-2 w-full">
-                        <FormLabel className="font-medium text-gray-600">
-                          Receipient's Account Number
-                        </FormLabel>
+            {transaction_type === "TRANSFER" && (
+              <div className=" w-full grid grid-cols-1 gap-5 lg:grid-cols-2">
+                <FormField
+                  control={transaction.form.control}
+                  name="recipient_bank_code"
+                  render={({ field }) => (
+                    <FormItem className="space-y-2">
+                      <FormLabel className="font-medium text-gray-600">
+                        Recipient Bank
+                      </FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        value={field.value}
+                      >
                         <FormControl>
-                          <Input
-                            placeholder="Enter recipient's account number"
-                            type="text"
-                            max={10}
-                            maxLength={10}
-                            {...field}
-                          />
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select transaction type" />
+                          </SelectTrigger>
                         </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <Refresh retry={retryFunction} isLoading={isLoading} />
+                        <SelectContent
+                          className="max-h-[50vh]"
+                          position="popper"
+                        >
+                          <SelectGroup>
+                            {[
+                              { code: "1001", name: "Bank A" },
+                              { code: "1002", name: "Bank B" },
+                              { code: "1003", name: "Bank C" },
+                            ].map((state) => (
+                              <SelectItem value={state.code} key={state.code}>
+                                {state.name}
+                              </SelectItem>
+                            ))}
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <div className=" w-full">
+                  <div className="flex w-full items-center gap-2">
+                    <FormField
+                      control={transaction.form.control}
+                      name="recipient_account"
+                      render={({ field }) => (
+                        <FormItem className="space-y-2 w-full">
+                          <FormLabel className="font-medium text-gray-600">
+                            Receipient's Account Number
+                          </FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="Enter recipient's account number"
+                              type="text"
+                              max={10}
+                              maxLength={10}
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <Refresh retry={retryFunction} isLoading={isLoading} />
+                  </div>
+                  {data?.account_name && (
+                    <p className=" text-primary bg-primary/5 px-5 p-2 rounded-lg capitalize">
+                      {data.account_name}
+                    </p>
+                  )}
                 </div>
-                {data?.account_name && (
-                  <p className=" text-primary bg-primary/5 px-5 p-2 rounded-lg capitalize">
-                    {data.account_name}
-                  </p>
-                )}
               </div>
-            </div>
+            )}
             <div className=" w-full grid grid-cols-1 gap-5 lg:grid-cols-2">
               <FormField
                 control={transaction.form.control}

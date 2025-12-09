@@ -1,5 +1,6 @@
 ##### 09.12.2025
 
+> Update: Show recipient's only for transfer transaction types
 > Update: Insufficient balance validation addition
 > Update: Account number input length validation
 > Fix: Ui inconsitencies bug fix

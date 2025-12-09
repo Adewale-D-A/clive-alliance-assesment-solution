@@ -1,5 +1,6 @@
 ##### 09.12.2025
 
+> Update: Show recipient's only for transfer transaction types
 > Update: Insufficient balance validation addition
 > Fix: Transaction filtering logic bug fix
 > Feature: Home, Transactions and Account modules endpoints fully fleshed out and tested

@@ -71,7 +71,10 @@ export async function createTransactionController(req: Request, res: Response) {
       description,
       recipient_account_number: Number(recipient_account),
       recipient_bank_code,
-      recipient_account_name: validateAccount.account_name,
+      recipient_account_name:
+        transaction_type === "DEPOSIT" || transaction_type === "WITHDRAWAL"
+          ? "ME"
+          : validateAccount.account_name,
       user_id: authUser?.id,
       created_by: authUser?.id,
     });
