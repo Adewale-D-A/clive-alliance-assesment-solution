@@ -20,6 +20,39 @@ export async function createTransactionController(req: Request, res: Response) {
   } = req.body;
   const authUser = req.user;
   try {
+    // Validate for insufficient balane
+    if (!(transaction_type === "DEPOSIT")) {
+      const { data, count } = await retrieveTransactionsService({
+        userId: authUser?.id || "NIL",
+      });
+
+      // TODO: Rething the summation logic for a more reusable and more SPO-failure resistant
+      const numOr0 = (n: any) => (isNaN(n) ? 0 : n);
+
+      const summed_up_balance =
+        data?.reduce(function (
+          acc, //accumulated value
+          val //current value in the array
+        ) {
+          const amount =
+            val.amount * (val.transaction_type === "DEPOSIT" ? +1 : -1);
+          return numOr0(acc) + numOr0(amount);
+        }, 0) || 0;
+      // TODO: Rething the summation logic for a more reusable and more SPO-failure resistant
+
+      // Insufficient Balance
+      if (Boolean(Number(amount) >= Number(summed_up_balance))) {
+        return res
+          .status(400)
+          .json(
+            responseGenerator(
+              false,
+              "You do not have sufficient balance to perform this transaction",
+              null
+            )
+          );
+      }
+    }
     const validateAccount = await validateAccountService({
       account_number: Number(recipient_account),
       bank_code: recipient_bank_code,
@@ -31,6 +64,7 @@ export async function createTransactionController(req: Request, res: Response) {
           responseGenerator(false, "Error validating account number", null)
         );
     }
+
     const newTransaction = await createTransactionService({
       transaction_type,
       amount: Number(amount),

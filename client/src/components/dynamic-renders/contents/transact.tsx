@@ -17,14 +17,29 @@ import {
 import { Input } from "../../_shared/input";
 import { Button } from "../../_shared/button";
 import useTransactionService from "../../../hooks/services/transactions";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useAppSelector } from "../../../stores/store-hooks";
 import useValidateAccount from "../../../hooks/services/GET/transactions/validate-account";
 import Refresh from "../../_shared/button/refresh";
+import useGetMyAccount from "../../../hooks/services/GET/accounts/account";
+import { MailWarning } from "lucide-react";
 
 export default function Transact() {
   const { metadata } = useAppSelector((state) => state.formModal.value);
   const { transaction } = useTransactionService();
+  const { data: myAccount } = useGetMyAccount();
+
+  const [inSufficientBal, setInsufficientBal] = useState(false);
+
+  const transaction_type = useMemo(
+    () => transaction.form.watch().transaction_type,
+    [transaction.form.watch().transaction_type]
+  );
+
+  const amount = useMemo(
+    () => transaction.form.watch().amount,
+    [transaction.form.watch().amount]
+  );
 
   const recipient_account_numb = useMemo(
     () => transaction.form.watch().recipient_account,
@@ -45,6 +60,17 @@ export default function Transact() {
       transaction.form.setValue("transaction_type", metadata?.type);
     }
   }, [metadata?.type]);
+
+  useEffect(() => {
+    if (transaction_type === "DEPOSIT") {
+      setInsufficientBal(false);
+    } else {
+      setInsufficientBal(
+        Boolean(Number(amount) >= Number(myAccount?.available_balance))
+      );
+    }
+  }, [myAccount, amount, transaction_type]);
+
   return (
     <div className=" w-full space-y-5">
       <p className=" text-green-500 px-5 p-3 rounded-lg bg-green-600/5">
@@ -168,7 +194,7 @@ export default function Transact() {
                     </FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="Enter amount"
+                        placeholder="Enter amount (USD)"
                         type="number"
                         {...field}
                       />
@@ -194,12 +220,21 @@ export default function Transact() {
               />
             </div>
           </div>
+          {inSufficientBal && (
+            <p className=" w-full text-center text-destructive bg-destructive/5 p-3 px-4 rounded-lg  flex items-center gap-2 flex-col lg:flex-row">
+              <MailWarning />
+              You do not have enough credit to perform this transaction, please
+              deposit before proceeding
+            </p>
+          )}
           <Button
             type="submit"
             className=" w-full"
+            disabled={inSufficientBal}
             isLoading={transaction.form.formState.isSubmitting}
+            variant={inSufficientBal ? "destructive" : "default"}
           >
-            Submit
+            {inSufficientBal ? "Insufficient Balance" : "Submit"}
           </Button>
         </form>
       </Form>

@@ -30,6 +30,7 @@ export async function retrieveAccountController(req: Request, res: Response) {
       userId: thisUser?.id || "NIL",
     });
 
+    // TODO: Rething the summation logic for a more reusable and more SPO-failure resistant
     const numOr0 = (n: any) => (isNaN(n) ? 0 : n);
 
     const summed_up_balance =
@@ -42,6 +43,7 @@ export async function retrieveAccountController(req: Request, res: Response) {
         return numOr0(acc) + numOr0(amount);
       }, 0) || 0;
 
+    // TODO: Rething the summation logic for a more reusable and more SPO-failure resistant
     return res.status(200).json(
       responseGenerator(true, "Account successfully retrieved", {
         ...account,
