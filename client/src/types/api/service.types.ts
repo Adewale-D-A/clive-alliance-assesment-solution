@@ -10,7 +10,6 @@ export type UserT = {
 };
 
 export type UserAccount = {
-  user?: UserT;
   account_number: number;
   account_name: string;
   bank: { code: string; name: string };
@@ -29,8 +28,10 @@ export type TransactionT = {
   id: string;
   amount: number;
   description: string;
-  recipient: UserAccount;
-  type: string;
+  recipient_account_number: string;
+  recipient_bank_code: string;
+  recipient_account_name: string;
+  transaction_type: string;
   created_at: string;
   updated_at: number;
   created_by: UserT;

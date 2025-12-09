@@ -1,6 +1,7 @@
 import { z } from "zod";
 import {
   ACCEPTED_FILE_TYPES,
+  ACCOUNT_NUMBER_MAX_LENGTH,
   MAX_FILE_SIZE,
 } from "../../config/system/constants";
 interface FileExtension extends File {
@@ -115,8 +116,10 @@ export const NewTransactionSchema = z.object({
     .min(2, { message: "Please Select a transaction type" }),
   amount: z.coerce.number<number>().min(1, { message: "Must be at least 1" }),
   description: z.string().min(2, { message: "Description is required" }),
-  recipient_bank: z.string().min(2, { message: "Please Select recipient's" }),
-  recipient_account: z.coerce
-    .number<number>()
-    .min(10, { message: "Must be at least 10" }),
+  recipient_bank_code: z
+    .string()
+    .min(2, { message: "Please Select recipient's bank" }),
+  recipient_account: z.coerce.number<number>().min(ACCOUNT_NUMBER_MAX_LENGTH, {
+    message: `Must be at least ${ACCOUNT_NUMBER_MAX_LENGTH} digits`,
+  }),
 });

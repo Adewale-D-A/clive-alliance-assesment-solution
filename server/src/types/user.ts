@@ -1,8 +1,12 @@
 export type CreateUserT = {
+  email: string;
+  gender: string;
   first_name: string;
   last_name: string;
   password: string;
-  email: string;
+  phone_number: string;
+  dob: string;
+  username?: string | undefined;
 };
 export type CreateTransactionT = {
   amount: number;
@@ -14,6 +18,7 @@ export type CreateAccountT = {
   user_id: string;
   account_type: string;
   account_name?: string;
+  currency?: string;
 };
 export type UpdateUserT = Partial<Omit<CreateUserT, "password" | "email">>;
 export type UpdateAccountT = Partial<Omit<CreateAccountT, "user_id">>;

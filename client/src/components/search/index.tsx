@@ -1,12 +1,10 @@
-"use client";
-
 import { cn } from "../../utils/cn";
 import { SearchIcon } from "lucide-react";
 import { useCallback, useState } from "react";
 import type { ChangeEvent, SyntheticEvent } from "react";
 import { Input } from "../_shared/input";
 import type { InputProps } from "../_shared/input";
-// import useCreateQueryString from "@/hooks/use-create-query-string";
+import useCreateQueryString from "../../hooks/use-create-query-string";
 
 interface SearchProps extends InputProps {
   allowUrlQuery?: boolean;
@@ -18,7 +16,7 @@ export default function Search({
   ...props
 }: SearchProps) {
   const [search, setSearch] = useState("");
-  // const urlQuery = useCreateQueryString();
+  const urlQuery = useCreateQueryString();
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -29,11 +27,10 @@ export default function Search({
   const handleSubmit = useCallback(
     (e: SyntheticEvent) => {
       e.preventDefault();
-      if (allowUrlQuery) {
-        // urlQuery("search", search);
-      }
+      urlQuery("search", search);
+      console.log("hot here");
     },
-    [search, allowUrlQuery]
+    [urlQuery, search, allowUrlQuery]
   );
   return (
     <form onSubmit={handleSubmit} className={cn("w-full", className)}>

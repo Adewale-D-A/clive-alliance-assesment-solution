@@ -47,9 +47,9 @@ export default function useGetTransactions(
           page: page,
           start_date,
           end_date,
-          ordering: sort,
+          sort: sort === "asc" ? "1" : "0",
           search: search,
-          page_size: limitless ? 1000 : Number(limit),
+          limit: limitless ? 1000 : Number(limit),
         };
         const queryKey = JSON.stringify(queryDataset);
         const { queryString } = queryParamsExtractor({
@@ -69,7 +69,7 @@ export default function useGetTransactions(
         } else {
           const response = await axios.get(`/transactions?${queryString}`);
           const transactionResponse = response?.data?.data;
-          const { results, count } = transactionResponse;
+          const { data, count } = transactionResponse;
           // const params = extractQueryString(next)
           const pageCount = Math.ceil(
             Number(count ?? 1) / (Number(limit) ?? DEFAULT_PAGE_LIMIT)
@@ -81,16 +81,16 @@ export default function useGetTransactions(
             total: Number(count),
             from: 1,
             to: 1,
-            length: results?.length,
+            length: data?.length,
           };
           if (!isExport) {
-            dispatch(updateTransactionsList({ data: results ?? [] }));
+            dispatch(updateTransactionsList({ data: data ?? [] }));
             setPagination(paginationDataset);
           }
           dispatch(
             addToPaginationHistory({
               pagination: paginationDataset,
-              data: results ?? [],
+              data: data ?? [],
               key: queryKey,
             })
           );

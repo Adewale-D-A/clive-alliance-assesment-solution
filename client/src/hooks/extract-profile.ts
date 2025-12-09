@@ -17,12 +17,9 @@ export default function useExtractProfile() {
     setIsFailed(false);
     try {
       const user = extractProfileClient();
-
       dispatch(
         updateUser({
-          user: {
-            ...user,
-          },
+          user,
         })
       );
     } catch (error) {

@@ -91,17 +91,15 @@ export default function useAuthentication() {
     },
   });
 
-  const handleSignUpSubmit = async (data: SignUpSchemaType) => {
+  const handleSignUpSubmit = async (
+    data: SignUpSchemaType,
+    onComplete: (val: boolean) => void
+  ) => {
     try {
       // STEP 1: CREATE NEW USER
       await customAxios.post("/auth/sign-up", data);
-      dispatch(
-        openInfobar({
-          render: "SuccessPrompt",
-          message: "Account successfully created",
-        })
-      );
-      router("/auth/sign-in");
+      onComplete(true);
+      // router("/");
     } catch (error) {}
   };
 

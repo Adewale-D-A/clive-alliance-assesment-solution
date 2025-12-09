@@ -8,36 +8,72 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Gender {
+  MALE
+  FEMALE
+}
+
+enum AccountType {
+  CHECKING
+  SAVINGS
+}
+
+enum TransactionType {
+  DEPOSIT
+  WITHDRAWAL
+  TRANSFER
+}
+
+enum Currency {
+  USD
+  NGN
+}
+
 model Users {
-  id         String   @id @default(uuid())
-  first_name String
-  last_name  String
-  email      String   @unique
-  password   String
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  id            String         @id @default(uuid())
+  first_name    String
+  last_name     String
+  email         String         @unique
+  gender        Gender
+  username      String? // optional
+  password      String
+  phone_number  String
+  dob           String
+  created_at    DateTime       @default(now())
+  updated_at    DateTime       @updatedAt
+  accounts      Accounts[]
+  User          Transactions[] @relation("User")
+  CreatedByUser Transactions[] @relation("CreatedByUser")
 
   @@map("users")
 }
 
-model BankDetails {
-  id             String   @id @default(uuid())
-  account_number String
-  user           String
-  type           String
-  created_at     DateTime @default(now())
-  updated_at     DateTime @updatedAt
+model Accounts {
+  id             String      @id @default(uuid())
+  account_number BigInt      @unique @default(dbgenerated("floor(random() * 9000000000 + 1000000000)"))
+  account_name   String
+  currency       Currency?   @default(USD)
+  account_type   AccountType
+  user_id        String
+  user           Users       @relation(fields: [user_id], references: [id])
 
-  @@map("bank_details")
+  @@map("accounts")
 }
 
 model Transactions {
-  id          String   @id @default(uuid())
-  type        String
-  amount      String
-  description String
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
+  id                       String          @id @default(uuid())
+  transaction_type         TransactionType
+  amount                   Int
+  description              String
+  recipient_account_number BigInt
+  recipient_bank_code      String
+  recipient_account_name   String
+  user_id                  String
+  userId                   Users           @relation("User", fields: [user_id], references: [id])
+  created_at               DateTime        @default(now())
+  updated_at               DateTime        @updatedAt
+  created_by               String
+  createdBy                Users           @relation("CreatedByUser", fields: [created_by], references: [id])
 
   @@map("transactions")
 }

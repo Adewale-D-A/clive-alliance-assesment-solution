@@ -14,15 +14,22 @@ import formatDate from "../../../utils/dates/isoDateConverter";
 import pageSerializer from "../../../utils/page-serializer";
 import { Link } from "react-router-dom";
 import { useCallback } from "react";
-import { useAppDispatch } from "../../../stores/store-hooks";
+import { useAppDispatch, useAppSelector } from "../../../stores/store-hooks";
 import { openFormModal } from "../../../stores/features/services/form-modal";
 import useGetTransactions from "../../../hooks/services/GET/transactions/transactions";
 import useGetMyAccount from "../../../hooks/services/GET/accounts/account";
+import Loader from "../../../components/loader";
+import Refresh from "../../../components/_shared/button/refresh";
 
 export default function DashboardHome() {
   const dispatch = useAppDispatch();
   const { data, isLoading } = useGetTransactions();
-  const { data: myAccount } = useGetMyAccount();
+  const { user } = useAppSelector((state) => state.auth.value);
+  const {
+    data: myAccount,
+    retryFunction: reloadMyAccount,
+    isLoading: myAccountLoading,
+  } = useGetMyAccount();
 
   const transact = useCallback((type?: "DEPOSIT") => {
     dispatch(
@@ -48,7 +55,8 @@ export default function DashboardHome() {
     <div className=" w-full flex flex-col gap-10">
       <div className=" w-full flex justify-center items-center">
         <p className=" font-bold text-center rounded-xl bg-green-500/5 text-green-500 p-4 px-4 lg:px-8 w-fit flex items-center flex-col lg:flex-row gap-2">
-          <Landmark /> Hello, Welcome to your personalised dashboard
+          <Landmark /> Hello {user?.first_name}, Welcome to your personalised
+          dashboard
         </p>
       </div>
 
@@ -59,23 +67,29 @@ export default function DashboardHome() {
             New deposit
           </Button>
         </div>
-        <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {[
-            {
-              id: "1",
-              title: "Balance",
-              description: "Available Balance",
-              value: currencyFormat(
-                myAccount?.available_balance || 0,
-                myAccount?.currency
-              ),
-              icon: <CircleDollarSign className=" h-6 w-6" />,
-              textClassName: "text-[#00FF00]",
-              bgClassName: "bg-[#00FF00]/10",
-            },
-          ].map((ite) => (
-            <PrimaryCardItem key={ite?.id} {...ite} />
-          ))}
+        <div>
+          <Refresh isLoading={myAccountLoading} retry={reloadMyAccount} />
+          <Loader
+            isLoading={myAccountLoading}
+            className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
+          >
+            {[
+              {
+                id: "1",
+                title: "Balance",
+                description: "Available Balance",
+                value: currencyFormat(
+                  myAccount?.available_balance || 0,
+                  myAccount?.currency
+                ),
+                icon: <CircleDollarSign className=" h-6 w-6" />,
+                textClassName: "text-[#00FF00]",
+                bgClassName: "bg-[#00FF00]/10",
+              },
+            ].map((ite) => (
+              <PrimaryCardItem key={ite?.id} {...ite} />
+            ))}
+          </Loader>
         </div>
       </div>
 
@@ -109,11 +123,14 @@ export default function DashboardHome() {
             {
               header: "RECIPIENT",
               key: "recipient",
-              render: ({ recipient }) => (
+              render: ({
+                recipient_account_number,
+                recipient_account_name,
+              }) => (
                 <div>
-                  <p className=" capitalize">{recipient?.account_name}</p>
+                  <p className=" capitalize">{recipient_account_name}</p>
                   <span className=" text-xs text-gray-500">
-                    Account: | {recipient?.account_number}
+                    Account: | {recipient_account_number}
                   </span>
                 </div>
               ),
@@ -125,8 +142,10 @@ export default function DashboardHome() {
             },
             {
               header: "TRANSACTION TYPE",
-              key: "type",
-              render: ({ type }) => <p className=" uppercase">{type}</p>,
+              key: "transaction_type",
+              render: ({ transaction_type }) => (
+                <p className=" uppercase">{transaction_type}</p>
+              ),
             },
             {
               header: "DESCRIPTION",

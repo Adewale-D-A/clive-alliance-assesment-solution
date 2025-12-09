@@ -18,6 +18,7 @@ import { openFormModal } from "../../../stores/features/services/form-modal";
 import useGetTransactions from "../../../hooks/services/GET/transactions/transactions";
 import useExtractUrlParams from "../../../hooks/extract-url-query-params";
 import currencyFormat from "../../../utils/currency-formatter";
+import Refresh from "../../../components/_shared/button/refresh";
 
 export default function DashboardTransactions() {
   const dispatch = useAppDispatch();
@@ -31,7 +32,7 @@ export default function DashboardTransactions() {
       search: "",
       sort: "asc",
     });
-  const { data, pagination, isLoading } = useGetTransactions({
+  const { data, pagination, isLoading, retryFunction } = useGetTransactions({
     search,
     page,
     limit: size,
@@ -79,6 +80,7 @@ export default function DashboardTransactions() {
             <div className="w-fit flex justify-end items-center gap-2">
               <Search className="w-full max-w-sm" />{" "}
             </div>
+            <Refresh isLoading={isLoading} retry={retryFunction} />
           </div>
         </div>
         <TableTemplate
@@ -101,11 +103,14 @@ export default function DashboardTransactions() {
             {
               header: "RECIPIENT",
               key: "recipient",
-              render: ({ recipient }) => (
+              render: ({
+                recipient_account_number,
+                recipient_account_name,
+              }) => (
                 <div>
-                  <p className=" capitalize">{recipient?.account_name}</p>
+                  <p className=" capitalize">{recipient_account_name}</p>
                   <span className=" text-xs text-gray-500">
-                    Account: | {recipient?.account_number}
+                    Account: | {recipient_account_number}
                   </span>
                 </div>
               ),
@@ -117,8 +122,10 @@ export default function DashboardTransactions() {
             },
             {
               header: "TRANSACTION TYPE",
-              key: "type",
-              render: ({ type }) => <p className=" uppercase">{type}</p>,
+              key: "transaction_type",
+              render: ({ transaction_type }) => (
+                <p className=" uppercase">{transaction_type}</p>
+              ),
             },
             {
               header: "DESCRIPTION",

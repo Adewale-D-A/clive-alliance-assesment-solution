@@ -120,6 +120,7 @@
 - run `npm run start` (start application on default port:8080)
 - run `npm run dev` (runs a hot-reload on-save environment with nodemon)
 - run `npm run migration:create` (create a prisma migration without reforming DB, useful in checking the generated migration SQL to ensure its query is what is intended to achieve)
+- run `npm run generate` (generate client type definition)
 - run `npm run migrate` (effect schema changes to connected DB, ideally, it should be the DEV DB)
 - run `npm run migrate:prod` (effect schema changes to connected DB, ideally, it should be the PROD DB)
 - run `npm run seed` (Seed data into the connected DB)

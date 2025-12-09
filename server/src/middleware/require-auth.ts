@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
+import { findUserByIdentifierService } from "../services/auth.js";
 
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY || "";
 
@@ -21,8 +22,16 @@ export default async function requireAuth(
       .json({ success: false, message: "Not authorized to access this route" });
   }
   try {
-    const decoded = jwt.verify(token, JWT_SECRET_KEY);
-    // req.user = await User.findById(decoded.id).select("-password");
+    const decoded = jwt.verify(token, JWT_SECRET_KEY) as { id: string };
+    const thisAuthUser = await findUserByIdentifierService(
+      undefined,
+      decoded?.id
+    );
+    req.user = thisAuthUser;
+
+    BigInt.prototype.toJSON = function () {
+      return Number(this); // or String(this);
+    };
     next();
   } catch (err) {
     return res.status(401).json({

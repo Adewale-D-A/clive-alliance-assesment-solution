@@ -5,23 +5,27 @@ import type { FormEvent } from "react";
 import { SendHorizonal } from "lucide-react";
 import { Input } from "../../components/_shared/input";
 import { Button } from "../../components/_shared/button";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
 export default function DateFilter() {
-  // const searchParams = useSearchParams();
-  // const router = useRouter();
-  // const pathname = usePathname();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [searchParams] = useSearchParams();
 
-  const onDateChange = useCallback((e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const form = e.target as any;
-    const startDate = form?.start?.value;
-    const endDate = form?.end?.value;
-    // const params = new URLSearchParams(searchParams.toString());
-    // params.set("start_date", startDate ?? "");
-    // params.set("end_date", endDate ?? "");
-    // const paramsString = params.toString();
-    // router.push(pathname + "?" + paramsString);
-  }, []);
+  const onDateChange = useCallback(
+    (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      const form = e.target as any;
+      const startDate = form?.start?.value;
+      const endDate = form?.end?.value;
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("start_date", startDate ?? "");
+      params.set("end_date", endDate ?? "");
+      const paramsString = params.toString();
+      navigate(location.pathname + "?" + paramsString);
+    },
+    [location, searchParams]
+  );
 
   return (
     <form

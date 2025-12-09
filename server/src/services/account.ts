@@ -2,28 +2,11 @@ import { prisma } from "../../lib/prisma.js";
 import { UpdateAccountT, CreateAccountT } from "../types/user.js";
 
 export async function retrieveAccountService(id: string) {
-  // const account = await prisma.accounts.findUnique({
-  //   where: {
-  //     id,
-  //   },
-  // });
-  const account = {
-    user: {
-      id: "u12345",
-      username: "azeez01",
-      first_name: "Azeez",
-      last_name: "Olawale",
-      email: "azeez.olawale@example.com",
-      phone_number: "+2348012345678",
-      dob: "1995-07-15",
-      gender: "male",
+  const account = await prisma.accounts.findFirst({
+    where: {
+      user_id: id,
     },
-    account_number: "1234567899",
-    account_name: "Adewale",
-    currency: "USD",
-    account_type: "CHECKING",
-    available_balance: 800,
-  };
+  });
   return account;
 }
 
@@ -46,10 +29,25 @@ export async function deleteAccountService(id: string) {
   // });
 }
 
-export async function createAccountService(data: CreateAccountT) {
-  // const newUser = await prisma.accounts.create({
-  //   data: data,
-  // });
-  const newAccount = {};
+export async function createAccountService(data: any) {
+  const newAccount = await prisma.accounts.create({
+    data: data,
+  });
+  // const newAccount = {};
   return newAccount;
+}
+
+export async function validateAccountService(data: {
+  account_number: number;
+  bank_code: string;
+}) {
+  const userAccount = {
+    ...data,
+    bank: {
+      name: "Bank A",
+      code: data?.bank_code,
+    },
+    account_name: "John Doe",
+  };
+  return userAccount;
 }

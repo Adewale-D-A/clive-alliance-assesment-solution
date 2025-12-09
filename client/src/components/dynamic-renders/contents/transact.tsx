@@ -17,7 +17,7 @@ import {
 import { Input } from "../../_shared/input";
 import { Button } from "../../_shared/button";
 import useTransactionService from "../../../hooks/services/transactions";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useAppSelector } from "../../../stores/store-hooks";
 import useValidateAccount from "../../../hooks/services/GET/transactions/validate-account";
 import Refresh from "../../_shared/button/refresh";
@@ -31,10 +31,20 @@ export default function Transact() {
     [transaction.form.watch().recipient_account]
   );
 
+  const recipient_bank_code = useMemo(
+    () => transaction.form.watch().recipient_bank_code,
+    [transaction.form.watch().recipient_bank_code]
+  );
   const { data, retryFunction, isLoading } = useValidateAccount(
-    String(recipient_account_numb)
+    String(recipient_account_numb),
+    recipient_bank_code
   );
 
+  useEffect(() => {
+    if (metadata?.type) {
+      transaction.form.setValue("transaction_type", metadata?.type);
+    }
+  }, [metadata?.type]);
   return (
     <div className=" w-full space-y-5">
       <p className=" text-green-500 px-5 p-3 rounded-lg bg-green-600/5">
@@ -85,17 +95,13 @@ export default function Transact() {
             <div className=" w-full grid grid-cols-1 gap-5 lg:grid-cols-2">
               <FormField
                 control={transaction.form.control}
-                name="recipient_bank"
+                name="recipient_bank_code"
                 render={({ field }) => (
                   <FormItem className="space-y-2">
                     <FormLabel className="font-medium text-gray-600">
                       Recipient Bank
                     </FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      value={metadata?.type ? metadata?.type : field.value}
-                      disabled={Boolean(metadata?.type)}
-                    >
+                    <Select onValueChange={field.onChange} value={field.value}>
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue placeholder="Select transaction type" />

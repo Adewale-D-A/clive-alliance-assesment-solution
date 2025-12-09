@@ -1,5 +1,6 @@
 import useGetATransaction from "../../../hooks/services/GET/transactions/transaction";
 import { useAppSelector } from "../../../stores/store-hooks";
+import currencyFormat from "../../../utils/currency-formatter";
 import formatDate from "../../../utils/dates/isoDateConverter";
 import Loader from "../../loader";
 
@@ -16,21 +17,21 @@ export default function ShowTransaction() {
             {data?.description}
           </p>
           <p className="text-sm text-gray-500">
-            {formatDate(data?.created_at || "")} • {data?.recipient.bank.name}
+            {formatDate(data?.created_at || "")}
           </p>
           <p className="text-sm text-gray-400">
-            <b>Account:</b> {data?.recipient.account_number}
+            <b>Account:</b> {data?.recipient_account_number}
           </p>
           <p className="text-sm text-gray-400">
-            <b>Account Name:</b> {data?.recipient.account_name}
+            <b>Account Name:</b> {data?.recipient_account_name}
           </p>
         </div>
         <div className="text-right">
           <span className={`px-3 py-1 rounded-full text-sm font-medium`}>
-            {data?.type}
+            {data?.transaction_type}
           </span>
           <p className="text-xl font-bold mt-2 text-gray-800">
-            ${data?.amount}
+            {currencyFormat(data?.amount, "USD")}
           </p>
         </div>
       </div>

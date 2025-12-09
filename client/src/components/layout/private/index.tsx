@@ -4,21 +4,23 @@ import { useAppSelector } from "../../../stores/store-hooks";
 import { BellDot, User } from "lucide-react";
 import { cn } from "../../../utils/cn";
 import formatDate, { formatTime } from "../../../utils/dates/isoDateConverter";
-// import useExtractProfile from "../../../hooks/extract-profile";
 import { Link } from "react-router-dom";
 import ToggleNavMenuButton from "./toggle-menu-button";
+import useExtractProfile from "../../../hooks/extract-profile";
+import Loading from "../../../pages/loading";
+
 const DashboardLayoutWrapper = ({
   children,
 }: {
   children: React.ReactNode;
 }) => {
-  // const { isLoading: isProfileLoading, data } = useExtractProfile();
+  const { isLoading: isProfileLoading, data } = useExtractProfile();
 
   const { fullMenuView, secondaryMenu } = useAppSelector(
     (state) => state?.navMenuProperties?.value
   );
 
-  // if (isProfileLoading) return <Loading />;
+  if (isProfileLoading) return <Loading />;
 
   return (
     <div className="w-full flex">

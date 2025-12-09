@@ -6,10 +6,27 @@ export const validateSignIn = [
 ];
 
 export const validateSignUp = [
-  body("email").isEmail().withMessage("Please provide a valid email"),
-  body("password").notEmpty().withMessage("Password is required"),
-  body("first_name").notEmpty().withMessage("First name is required"),
-  body("last_name").notEmpty().withMessage("Last name is required"),
+  body("email")
+    .isString()
+    .withMessage("Email is required")
+    .isEmail()
+    .withMessage("Email must be valid"),
+  body("gender")
+    .isString()
+    .withMessage("Gender is required")
+    .isIn(["MALE", "FEMALE"])
+    .withMessage("Gender must be either MALE or FEMALE"),
+  body("account_type")
+    .isString()
+    .withMessage("Account type is required")
+    .isIn(["CHECKING", "SAVINGS"])
+    .withMessage("Gender must be either MALE or FEMALE"),
+  body("first_name").isString().withMessage("First name is required"),
+  body("last_name").isString().withMessage("Last name is required"),
+  body("username").optional().isString(),
+  body("password").isString().withMessage("Password is required"),
+  body("phone_number").isString().withMessage("Phone number is required"),
+  body("dob").isString().withMessage("Date of birth is required"),
 ];
 
 export const validateForgotPassword = [

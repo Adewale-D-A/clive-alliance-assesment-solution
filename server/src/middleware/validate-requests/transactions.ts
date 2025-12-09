@@ -4,6 +4,9 @@ export const validateCreateTransaction = [
   body("transaction_type")
     .isIn(["DEPOSIT", "WITHDRAWAL", "TRANSFER"])
     .withMessage("Type must be one of: TRANSFER, DEPOSIT, WITHDRAWAL"),
+  body("recipient_bank_code")
+    .notEmpty()
+    .withMessage("Recipient's bank code is required"),
   body("description")
     .notEmpty()
     .withMessage("Transaction description is required"),

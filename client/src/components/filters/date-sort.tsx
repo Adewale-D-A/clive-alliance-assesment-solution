@@ -10,12 +10,13 @@ import {
 } from "../../components/_shared/select";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { useCallback } from "react";
+import useCreateQueryString from "../../hooks/use-create-query-string";
 
 export default function DateSort({ ...props }: SelectPrimitive.SelectProps) {
-  // const query = useCreateQueryString();
+  const query = useCreateQueryString();
 
   const handleOnChange = useCallback((value: string) => {
-    // query("sort", value);
+    query("sort", value);
   }, []);
   return (
     <Select {...props} onValueChange={(e) => handleOnChange(e)}>

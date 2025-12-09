@@ -12,6 +12,7 @@ import { Search } from "lucide-react";
 // import { Skeleton } from "../../../components/loader/skeleton";
 import Pagination from "../../../components/pagination";
 import type { PaginationType } from "../../../types/types";
+import { Skeleton } from "../../loader/skeleton";
 
 interface Column<T> {
   key: string;
@@ -88,8 +89,11 @@ export default function TableTemplate({
                 colSpan={columns.length}
                 className="text-center space-y-3"
               >
-                <p>...Loading</p>
-                <p>...Loading</p>
+                <Skeleton className="h-12" />
+                <Skeleton className="h-12" />
+                <Skeleton className="h-12" />
+                <Skeleton className="h-12" />
+                <Skeleton className="h-12" />
               </TableCell>
             </TableRow>
           )}

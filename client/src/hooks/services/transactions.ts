@@ -31,6 +31,7 @@ export default function useTransactionService() {
       amount: 0,
       description: "",
       recipient_account: 0,
+      recipient_bank_code: "",
     },
   });
 

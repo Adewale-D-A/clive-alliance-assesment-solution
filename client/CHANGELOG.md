@@ -1,3 +1,7 @@
+##### 09.12.2025
+
+> Feature: Home, Transactions and Account modules endpoints and UI fully fleshed out and tested
+
 ##### 08.12.2025
 
 > Fix: Build error fix
