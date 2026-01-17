@@ -1,3 +1,7 @@
+##### 17.01.2025
+
+> Bug fix: Safari dialog height fix
+
 ##### 09.12.2025
 
 > Fix: Recipient's bank details cache fix

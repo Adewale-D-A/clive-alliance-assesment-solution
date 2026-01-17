@@ -1,6 +1,3 @@
-/** @format */
-"use client";
-
 import * as React from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 
@@ -30,7 +27,7 @@ const modalContentsVariants = cva(
     defaultVariants: {
       variant: "default",
     },
-  }
+  },
 );
 
 const DialogOverlay = React.forwardRef<
@@ -41,7 +38,7 @@ const DialogOverlay = React.forwardRef<
     ref={ref}
     className={cn(
       "fixed inset-0 z-50 bg-black/50  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
-      className
+      className,
     )}
     {...props}
   />
@@ -49,7 +46,8 @@ const DialogOverlay = React.forwardRef<
 DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
 
 export interface DialogContentProps
-  extends React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>,
+  extends
+    React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>,
     VariantProps<typeof modalContentsVariants> {}
 
 const DialogContent = React.forwardRef<
@@ -64,11 +62,14 @@ const DialogContent = React.forwardRef<
           variant === "alignRight"
             ? "100vw"
             : variant === "slideToRight"
-            ? "-100vw"
-            : "0px",
-        height: variant === "default" ? "0%" : "fit-content",
+              ? "-100vw"
+              : "0px",
+        y:
+          variant === "alignRight" || variant === "slideToRight"
+            ? "0px"
+            : "100vh",
       }} // start off-screen
-      animate={{ x: 0, height: "fit-content" }} // animate into position
+      animate={{ x: 0, y: 0 }} // animate into position
       transition={{
         type: "spring",
         stiffness: 100,
@@ -83,7 +84,7 @@ const DialogContent = React.forwardRef<
               ? variant
               : "default",
           className,
-        })
+        }),
       )}
     >
       <DialogPrimitive.Content
@@ -93,7 +94,7 @@ const DialogContent = React.forwardRef<
           "overflow-y-auto h-full p-4",
           variant === "default" && "max-h-[calc(100vh-100px)]",
           variant === "alignRight" && "max-h-[calc(100vh-10px)]",
-          variant === "slideToRight" && " max-h-[calc(100vh-100px)]"
+          variant === "slideToRight" && " max-h-[calc(100vh-100px)]",
         )}
       >
         {children}
@@ -114,7 +115,7 @@ const DialogHeader = ({
   <div
     className={cn(
       "flex flex-col space-y-1.5 text-center sm:text-left",
-      className
+      className,
     )}
     {...props}
   />
@@ -128,7 +129,7 @@ const DialogFooter = ({
   <div
     className={cn(
       "flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2",
-      className
+      className,
     )}
     {...props}
   />
@@ -143,7 +144,7 @@ const DialogTitle = React.forwardRef<
     ref={ref}
     className={cn(
       "text-lg font-semibold leading-none tracking-tight mb-8",
-      className
+      className,
     )}
     {...props}
   />

@@ -49,7 +49,7 @@ export async function signUpController(req: Request, res: Response) {
     return res
       .status(500)
       .json(
-        responseGenerator(false, "Unable to create this user", null, error)
+        responseGenerator(false, "Unable to create this user", null, error),
       );
   }
 }
@@ -64,7 +64,8 @@ export async function signInController(req: Request, res: Response) {
         .json(responseGenerator(false, "Invalid credentials", null));
     }
 
-    const isValidPass = isPasswordValid(password, authUser.password);
+    const isValidPass = await isPasswordValid(password, authUser.password);
+
     if (!isValidPass) {
       return res
         .status(400)

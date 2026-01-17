@@ -120,9 +120,9 @@
 #### <b>Getting the APP running</b>
 
 - run `npm install` (to install all the dependencies)
-- run `npm run dev` (runs a hot-reload on-save environment with nodemon)
-- run `npm run migration:create` (create a prisma migration without reforming DB, useful in checking the generated migration SQL to ensure its query is what is intended to achieve)
 - run `npm run generate` (generate client type definition)
+- run `npm run migration:create` (create a prisma migration without reforming DB, useful in checking the generated migration SQL to ensure its query is what is intended to achieve)
+- run `npm run dev` (runs a hot-reload on-save environment with nodemon)
 - run `npm run migrate` (effect schema changes to connected DB, ideally, it should be the DEV DB)
 
 ##### <b>Production ready commands</b>

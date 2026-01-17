@@ -1,3 +1,8 @@
+##### 17.01.2025
+
+> Update: Readme app setup commands order re-arranged
+> Bug fix: Authentication password validation fix
+
 ##### 09.12.2025
 
 > Fix: Count filtering bug fix
